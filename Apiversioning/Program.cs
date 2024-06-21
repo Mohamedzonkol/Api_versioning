@@ -5,7 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.CacheProfiles.Add("Default", new CacheProfile
+    {
+        Duration = 40
+    });
+});
+builder.Services.AddResponseCaching();
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;

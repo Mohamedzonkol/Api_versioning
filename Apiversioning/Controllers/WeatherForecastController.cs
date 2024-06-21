@@ -20,6 +20,8 @@ namespace Apiversioning.Controllers
             _logger = logger;
         }
         [MapToApiVersion("1.0")]
+        //[ResponseCache(Duration = 50)]
+        [ResponseCache(CacheProfileName = "Default")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

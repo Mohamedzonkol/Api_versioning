@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Apiversioning.Controllers
 {
@@ -19,10 +20,18 @@ namespace Apiversioning.Controllers
         {
             _logger = logger;
         }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        [SwaggerOperation(
+            Summary = "Retrieves a collection of weather forecasts.",
+            Description = "Returns a collection of weather forecasts.",
+            OperationId = "GetWeatherForecast",
+            Tags = new[] { "WeatherForecast" }
+        )]
+        [SwaggerResponse(200, "Success", typeof(IEnumerable<WeatherForecast>))]
         [MapToApiVersion("1.0")]
         //[ResponseCache(Duration = 50)]
         [ResponseCache(CacheProfileName = "Default")]
-        [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -33,8 +42,16 @@ namespace Apiversioning.Controllers
             })
             .ToArray();
         }
-        [MapToApiVersion("2.0")]
+
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Retrieves a collection of some values.",
+            Description = "Returns a collection of some values.",
+            OperationId = "GetSomeValue",
+            Tags = new[] { "WeatherForecast" }
+        )]
+        [SwaggerResponse(200, "Success", typeof(IEnumerable<string>))]
+        [MapToApiVersion("2.0")]
         public IEnumerable<string> GetSomeValue()
         {
             return new List<string> { "value1", "value2" };
